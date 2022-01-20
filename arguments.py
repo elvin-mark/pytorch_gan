@@ -1,8 +1,9 @@
 from argparse import ArgumentParser
 
-AVAILABLE_MODELS = ["digits_gan", "mnist_gan"]
+AVAILABLE_MODELS = ["digits_gan", "mnist_gan",
+                    "cifar10_gan", "simple_general_dcnn_gan"]
 AVAILABLE_DATASETS = ["digits", "mnist",
-                      "fashion_mnist", "cifar10", "cifar100"]
+                      "fashion_mnist", "cifar10", "cifar100", "image_folder"]
 
 
 def create_arguments():
@@ -19,6 +20,8 @@ def create_arguments():
     parser.add_argument("--optim", type=str, default="sgd", help="Optimizer")
     parser.add_argument("--save-model", action="store_true",
                         dest="save_model", help="Save Trained Model")
-    parser.set_defaults(save_model=False)
+    parser.add_argument("--customize", action="store_true",
+                        dest="customize", help="Customize models and dataloaders")
+    parser.set_defaults(save_model=False, customize=False)
     args = parser.parse_args()
     return args

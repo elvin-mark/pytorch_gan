@@ -71,6 +71,31 @@ def cifar100_dataloader(args):
     return train_dl, test_dl
 
 
+def image_folder_dataloader(args):
+    if args.root is None:
+        assert("No Root Folder specified")
+
+    raw_transform = torchvision.transforms.Compose([
+        torchvision.transforms.Resize((112, 112)),
+        torchvision.transforms.ToTensor()
+    ])
+
+    train_path = os.path.join(args.root, "train")
+    test_path = os.path.join(args.root, "test")
+
+    train_ds = torchvision.datasets.ImageFolder(
+        train_path, transform=raw_transform)
+    test_ds = torchvision.datasets.ImageFolder(
+        test_path, transform=raw_transform)
+
+    train_dl = torch.utils.data.DataLoader(
+        train_ds, batch_size=args.batch_size, shuffle=True)
+    test_dl = torch.utils.data.DataLoader(
+        test_ds, batch_size=args.batch_size, shuffle=True)
+
+    return train_dl, test_dl
+
+
 def create_dataloader(args):
     if args.dataset == "digits":
         return digits_dataloader(args)
@@ -82,5 +107,7 @@ def create_dataloader(args):
         return cifar10_dataloader(args)
     elif args.dataset == "cifar100":
         return cifar100_dataloader(args)
+    elif args.dataset == "image_folder":
+        return image_folder_dataloader(args)
     else:
         return None

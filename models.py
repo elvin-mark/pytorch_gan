@@ -121,5 +121,7 @@ def create_model(args):
         return mnist_gan()
     elif args.model == "cifar10_gan":
         return cifar10_gan()
+    elif args.model == "simple_general_dcnn_gan":
+        return simple_general_dcnn_gan()
     else:
         return None

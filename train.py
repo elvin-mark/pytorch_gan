@@ -15,11 +15,20 @@ args = create_arguments()
 
 dev = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-generator, discriminator = create_model(args)
+if args.customize:
+    from customize import create_model_customize
+    generator, discriminator = create_model_customize(args)
+else:
+    generator, discriminator = create_model(args)
+
 generator = generator.to(dev)
 discriminator = discriminator.to(dev)
 
-train_dl, test_dl = create_dataloader(args)
+if args.customize:
+    from customize import create_dataloader_customize
+    train_dl, test_dl = create_dataloader_customize(args)
+else:
+    train_dl, test_dl = create_dataloader(args)
 
 optim_generator = create_opimizer(generator, args)
 optim_discriminator = create_opimizer(discriminator, args)
