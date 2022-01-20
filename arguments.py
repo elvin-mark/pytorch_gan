@@ -16,6 +16,8 @@ def create_arguments():
                         help="Path to the root folder of the dataset")
     parser.add_argument("--batch-size", type=int,
                         default=32, help="Batch Size")
+    parser.add_argument("--gpu", action="store_true",
+                        dest="gpu", help="Train with GPU")
     parser.add_argument("--lr", type=float, default=0.01, help="learning rate")
     parser.add_argument("--epochs", type=int, default=25,
                         help="Epochs for training")
@@ -26,7 +28,7 @@ def create_arguments():
                         dest="customize", help="Customize models and dataloaders")
     parser.add_argument("--start-model", type=str, default=None,
                         help="Specified the path to where the pretrained generator and discriminator model are")
-    parser.set_defaults(save_model=False, customize=False)
+    parser.set_defaults(save_model=False, customize=False, gpu=False)
 
     args = parser.parse_args()
     return args

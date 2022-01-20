@@ -14,7 +14,12 @@ if not os.path.exists("sample_images"):
 
 args = create_arguments()
 
-dev = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+if args.gpu and torch.cuda.is_available():
+    print("Using GPU for training")
+    dev = torch.device("cuda:0")
+else:
+    print("Using CPU for training. It can be a little bit slow.")
+    dev = torch.device("cpu")
 
 print("Creating Model ...")
 if args.customize:
