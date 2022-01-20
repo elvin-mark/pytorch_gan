@@ -1,5 +1,5 @@
 from re import I
-from arguments import create_arguments
+from arguments import create_train_arguments
 from models import create_model
 from datasets import create_dataloader
 from optimizers import create_opimizer
@@ -12,7 +12,7 @@ if not os.path.exists("trained_models"):
 if not os.path.exists("sample_images"):
     os.mkdir("sample_images")
 
-args = create_arguments()
+args = create_train_arguments()
 
 if args.gpu and torch.cuda.is_available():
     print("Using GPU for training")

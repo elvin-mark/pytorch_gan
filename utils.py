@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 import matplotlib.pyplot as plt
 import math
+import numpy as np
 
 
 def train(generator, discriminator, optim_generator, optim_discriminator, train_dl, epochs, dev):
@@ -52,10 +53,12 @@ def generate_samples(generator, dev, rows=4, cols=4, show=False):
         min(4*cols, 16), min(4*rows, 16)))
     _, C, H, W = fake_imgs.shape
     for i, img in enumerate(fake_imgs):
+        img = img.cpu().detach().numpy()
+        img = (img - np.min(img)) / (np.max(img) - np.min(img))
         if C == 1:
-            img = img.cpu().detach().numpy().reshape((H, W))
+            img = img.reshape((H, W))
         elif C == 3:
-            img = img.cpu().detach().numpy().transpose(1, 2, 0)
+            img = img.transpose(1, 2, 0)
         else:
             assert("Wrong format for image")
         axs[i//cols, i % cols].imshow(img)

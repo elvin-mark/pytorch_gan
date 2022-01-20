@@ -6,7 +6,7 @@ AVAILABLE_DATASETS = ["digits", "mnist",
                       "fashion_mnist", "cifar10", "cifar100", "image_folder"]
 
 
-def create_arguments():
+def create_train_arguments():
     parser = ArgumentParser(description="Trainer for GAN models")
     parser.add_argument("--model", type=str, default="digits_gan",
                         choices=AVAILABLE_MODELS, help="GAN model")
@@ -30,5 +30,22 @@ def create_arguments():
                         help="Specified the path to where the pretrained generator and discriminator model are")
     parser.set_defaults(save_model=False, customize=False, gpu=False)
 
+    args = parser.parse_args()
+    return args
+
+
+def create_test_arguments():
+    parser = ArgumentParser(description="Trainer for GAN models")
+    parser.add_argument("--model", type=str, default="digits_gan",
+                        choices=AVAILABLE_MODELS, help="GAN model")
+    parser.add_argument("--gpu", action="store_true",
+                        dest="gpu", help="Train with GPU")
+    parser.add_argument("--customize", action="store_true",
+                        dest="customize", help="Customize models and dataloaders")
+    parser.add_argument("--model-path", type=str, default=None,
+                        help="Specified the path to where the pretrained generator and discriminator model are")
+    parser.add_argument("--num-imgs", type=int, default=16,
+                        help="number of images to be generated")
+    parser.set_defaults(customize=False, gpu=False)
     args = parser.parse_args()
     return args
