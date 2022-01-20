@@ -17,7 +17,7 @@ def train(generator, discriminator, optim_generator, optim_discriminator, train_
             y_real = torch.ones(x.shape[0], 1).to(dev)
             y_fake = torch.zeros(x.shape[0], 1).to(dev)
 
-            noise = torch.rand((x.shape[0], 100)).to(dev)
+            noise = torch.randn((x.shape[0], 100)).to(dev)
             x_fake = generator(noise)
             o_real = discriminator(x)
             o_fake = discriminator(x_fake.detach())
@@ -47,7 +47,7 @@ def train(generator, discriminator, optim_generator, optim_discriminator, train_
 
 def generate_samples(generator, dev, rows=4, cols=4, show=False):
     generator.eval()
-    noise = torch.rand((rows*cols, 100)).to(dev)
+    noise = torch.randn((rows*cols, 100)).to(dev)
     fake_imgs = generator(noise)
     fig, axs = plt.subplots(rows, cols, figsize=(
         min(4*cols, 16), min(4*rows, 16)))
