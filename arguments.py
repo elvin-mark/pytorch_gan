@@ -12,6 +12,8 @@ def create_arguments():
                         choices=AVAILABLE_MODELS, help="GAN model")
     parser.add_argument("--dataset", type=str, default="digits",
                         choices=AVAILABLE_DATASETS, help="dataset for training")
+    parser.add_argument("--root", type=str, default=None,
+                        help="Path to the root folder of the dataset")
     parser.add_argument("--batch-size", type=int,
                         default=32, help="Batch Size")
     parser.add_argument("--lr", type=float, default=0.01, help="learning rate")
@@ -22,6 +24,9 @@ def create_arguments():
                         dest="save_model", help="Save Trained Model")
     parser.add_argument("--customize", action="store_true",
                         dest="customize", help="Customize models and dataloaders")
+    parser.add_argument("--start-model", type=str, default=None,
+                        help="Specified the path to where the pretrained generator and discriminator model are")
     parser.set_defaults(save_model=False, customize=False)
+
     args = parser.parse_args()
     return args
