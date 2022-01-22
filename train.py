@@ -43,6 +43,7 @@ print("Preparing data ...")
 if args.customize:
     from customize import create_dataloader_customize
     train_dl, test_dl = create_dataloader_customize(args)
+    args.dataset = "customize"
 else:
     train_dl, test_dl = create_dataloader(args)
 
