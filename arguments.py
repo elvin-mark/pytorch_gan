@@ -1,8 +1,9 @@
 from argparse import ArgumentParser
+from email.policy import default
 
 AVAILABLE_MODELS = ["digits_gan", "mnist_gan",
                     "cifar10_gan", "simple_general_dcnn_gan"]
-AVAILABLE_DATASETS = ["digits", "mnist",
+AVAILABLE_DATASETS = ["digits", "mnist", "kmnist",
                       "fashion_mnist", "cifar10", "cifar100", "image_folder"]
 
 
@@ -28,6 +29,8 @@ def create_train_arguments():
                         dest="customize", help="Customize models and dataloaders")
     parser.add_argument("--start-model", type=str, default=None,
                         help="Specified the path to where the pretrained generator and discriminator model are")
+    parser.add_argument("--freq-samples", type=int, default=0,
+                        help="Frequency to generate sample images during training")
     parser.set_defaults(save_model=False, customize=False, gpu=False)
 
     args = parser.parse_args()

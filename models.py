@@ -28,11 +28,12 @@ def simple_deconv_block(in_features, out_features, kernel_size, stride, padding)
     )
 
 
-def simple_conv_block(in_features, out_features, kernel_size, stride=1, padding=0):
+def simple_conv_block(in_features, out_features, kernel_size, stride=1, padding=0, leaky=False):
 
     return nn.Sequential(nn.Conv2d(in_features, out_features, kernel_size, stride=stride, padding=padding, bias=False),
                          nn.BatchNorm2d(out_features),
-                         nn.ReLU(inplace=True),
+                         nn.ReLU(inplace=True) if not leaky else nn.LeakyReLU(
+                             0.2, inplace=True),
                          nn.MaxPool2d(2))
 
 

@@ -49,6 +49,17 @@ def fashion_mnist_dataloader(args):
     return train_dl, test_dl
 
 
+def kmnist_dataloader(args):
+    train_ds = torchvision.datasets.KMNIST(
+        ROOT_DIR, train=True, download=True, transform=torchvision.transforms.ToTensor())
+    test_ds = torchvision.datasets.KMNIST(
+        ROOT_DIR, train=False, download=True, transform=torchvision.transforms.ToTensor())
+    train_dl = torch.utils.data.DataLoader(
+        train_ds, batch_size=args.batch_size)
+    test_dl = torch.utils.data.DataLoader(test_ds, batch_size=args.batch_size)
+    return train_dl, test_dl
+
+
 def cifar10_dataloader(args):
     train_ds = torchvision.datasets.CIFAR10(
         ROOT_DIR, train=True, download=True, transform=torchvision.transforms.ToTensor())
@@ -101,6 +112,8 @@ def create_dataloader(args):
         return digits_dataloader(args)
     elif args.dataset == "mnist":
         return mnist_dataloader(args)
+    elif args.dataset == "kmnist":
+        return kmnist_dataloader(args)
     elif args.dataset == "fashion_mnist":
         return fashion_mnist_dataloader(args)
     elif args.dataset == "cifar10":

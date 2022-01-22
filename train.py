@@ -51,7 +51,7 @@ optim_discriminator = create_opimizer(discriminator, args)
 
 print("Start Training ...")
 train(generator, discriminator, optim_generator,
-      optim_discriminator, train_dl, args.epochs, dev)
+      optim_discriminator, train_dl, args.epochs, dev, freq_samples=args.freq_samples)
 
 print("Saving model ...")
 if args.save_model:
