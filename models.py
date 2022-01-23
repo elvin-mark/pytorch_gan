@@ -93,6 +93,9 @@ def cifar10_gan():
 
 
 def simple_general_dcnn_gan():
+    """
+    generate images 3 x 112 x 112
+    """
     generator = nn.Sequential(
         simple_delinear_block(100, 512),
         simple_delinear_block(512, 7*7*64),
@@ -115,6 +118,30 @@ def simple_general_dcnn_gan():
     return generator, discriminator
 
 
+def model_template_1():
+    """
+    generate images 3 x 64 x 64
+    """
+    generator = nn.Sequential(
+        Reshape((-1, 100, 1, 1)),
+        simple_deconv_block(100, 512, 4, 1, 0),
+        simple_deconv_block(512, 256, 4, 2, 1),
+        simple_deconv_block(256, 128, 4, 2, 1),
+        simple_deconv_block(128, 64, 4, 2, 1),
+        nn.ConvTranspose2d(64, 3, 4, 2, 1, bias=False),
+        nn.Tanh()
+    )
+    discriminator = nn.Sequential(
+        simple_conv_block(3, 64, 4, 2, 1, leaky=True),
+        simple_conv_block(64, 128, 4, 2, 1, leaky=True),
+        simple_conv_block(128, 256, 4, 2, 1, leaky=True),
+        simple_conv_block(256, 512, 4, 2, 1, leaky=True),
+        nn.Conv2d(512, 1, kernel_size=4, bias=False),
+        nn.Flatten(),
+    )
+    return generator, discriminator
+
+
 def create_model(args):
     if args.model == "digits_gan":
         return digits_gan()
@@ -124,5 +151,8 @@ def create_model(args):
         return cifar10_gan()
     elif args.model == "simple_general_dcnn_gan":
         return simple_general_dcnn_gan()
+    elif args.model == "model_template_1":
+        return model_template_1()
+
     else:
         return None

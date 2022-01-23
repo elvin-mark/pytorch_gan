@@ -107,6 +107,29 @@ def image_folder_dataloader(args):
     return train_dl, test_dl
 
 
+def dataloader_template_1(args):
+    """
+    Similar to image folder, but resizes the image to 64 x 64 
+    """
+    if args.root is None:
+        assert("No Root Folder specified")
+
+    raw_transform = torchvision.transforms.Compose([
+        torchvision.transforms.Resize((64, 64)),
+        torchvision.transforms.ToTensor()
+    ])
+
+    train_path = os.path.join(args.root, "train")
+
+    train_ds = torchvision.datasets.ImageFolder(
+        train_path, transform=raw_transform)
+
+    train_dl = torch.utils.data.DataLoader(
+        train_ds, batch_size=args.batch_size, shuffle=True)
+
+    return train_dl, None
+
+
 def create_dataloader(args):
     if args.dataset == "digits":
         return digits_dataloader(args)
@@ -122,5 +145,7 @@ def create_dataloader(args):
         return cifar100_dataloader(args)
     elif args.dataset == "image_folder":
         return image_folder_dataloader(args)
+    elif args.dataset == "dataloader_template_1":
+        return dataloader_template_1(args)
     else:
         return None

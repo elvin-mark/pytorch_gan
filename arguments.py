@@ -2,9 +2,9 @@ from argparse import ArgumentParser
 from email.policy import default
 
 AVAILABLE_MODELS = ["digits_gan", "mnist_gan",
-                    "cifar10_gan", "simple_general_dcnn_gan"]
+                    "cifar10_gan", "simple_general_dcnn_gan", "model_template_1"]
 AVAILABLE_DATASETS = ["digits", "mnist", "kmnist",
-                      "fashion_mnist", "cifar10", "cifar100", "image_folder"]
+                      "fashion_mnist", "cifar10", "cifar100", "image_folder", "dataloader_template_1"]
 
 
 def create_train_arguments():
