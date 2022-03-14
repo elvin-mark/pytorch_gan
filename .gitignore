@@ -3,3 +3,5 @@ sample_images/
 trained_models/
 customize.py 
 customize_models/
+data/
+customize.py

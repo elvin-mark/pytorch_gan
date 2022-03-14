@@ -3,6 +3,7 @@ import torch.nn as nn
 import matplotlib.pyplot as plt
 import math
 import numpy as np
+import tqdm
 
 
 def train_one_epoch(generator, discriminator, optim_generator, optim_discriminator, train_dl, dev):
@@ -69,7 +70,7 @@ def generate_samples(generator, dev, rows=4, cols=4, show=False, fn="generated_i
 
 
 def train(generator, discriminator, optim_generator, optim_discriminator, train_dl, epochs, dev, freq_samples=0):
-    for epoch in range(epochs):
+    for epoch in tqdm.tqdm(range(epochs)):
         avg_generator_loss, avg_discriminator_loss = train_one_epoch(
             generator, discriminator, optim_generator, optim_discriminator, train_dl, dev)
         print(
